@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Database test</title>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+	@keyframes light {
+
+		0% {
+			opacity: .6;
+		}
+
+		50% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: .6;
+		}
+
+	}
+
+	* {
+		-webkit-transition: color 1s ease-in-out;
+		-moz-transition: color 1s ease-in-out;
+		-ms-transition: color 1s ease-in-out;
+		-o-transition: color 1s ease-in-out;
+		transition: color 1s ease-in-out;
+	}
+
+	body {
+		background-color: #000000;
+	}
+
+	ul {
+		-webkit-align-items: flex-start;
+		align-items: flex-start;
+		align-content: flex-start;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column wrap;
+		flex-flow: column wrap;
+		-webkit-justify-content: flex-start;d
+		justify-content: flex-start;
+		max-height: 100vh;
+		padding: 1em;
+	}
+
+	li {
+		-webkit-animation: light 1.125s ease infinite;
+		-o-animation: light 1.125s ease infinite;
+		animation: light 1.125s ease infinite;
+		font-family: monospace;
+		line-height: 1.6;
+		margin-right: 1em;
+	}
+
+</style>
+
+<body>
+
+<ul id="list" class="font-light-blue-a700"></ul>
+
+<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+<script>
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyBa0FZG77D7BBYvlE5Jz9D9RWGKBu21bhc",
+		authDomain: "latinoware-2016.firebaseapp.com",
+		databaseURL: "https://latinoware-2016.firebaseio.com",
+		storageBucket: "latinoware-2016.appspot.com",
+		messagingSenderId: "203892223215"
+	};
+	firebase.initializeApp(config);
+</script>
+
+<script>
+
+	var databaseRef = firebase.database();
+
+	databaseRef.ref('mo').set('zilla');
+
+	databaseRef.ref('users').push(true);
+
+	databaseRef.ref('users').set(false);
+
+	setInterval(function () {
+
+		databaseRef.ref('users').push(true);
+
+	}, 1000);
+
+	var list = document.getElementById('list');
+
+	databaseRef.ref('users').on('child_added', function (data) {
+
+		if (list.classList.contains('font-light-blue-a700')) {
+			list.classList.remove('font-light-blue-a700');
+			list.classList.add('font-red-a700');
+		} else {
+			list.classList.remove('font-red-a700');
+			list.classList.add('font-light-blue-a700');
+		}
+
+		var li = document.createElement('li');
+
+		li.innerText = data.key;
+
+		list.appendChild(li);
+
+	})
+
+</script>
+
+</body>
+
+</html>
